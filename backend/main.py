@@ -7,8 +7,7 @@ import os
 import yaml
 load_dotenv()
 
-
-def load_config(config_path: str = "agents_config.yaml") -> dict:
+def load_config(config_path: str = "backend/agents_config.yaml") -> dict:
     with open(config_path, 'r') as file:
         return yaml.safe_load(file)
 
@@ -59,7 +58,11 @@ async def run_dating_simulation(websocket):
         await send_log(websocket, f"Fatal System Error: {str(e)}")
 
 async def main():
-    server = await websockets.serve(run_dating_simulation, "localhost", 8765)
+    server = await websockets.serve(
+        run_dating_simulation, 
+        "localhost", 
+        8765,
+    )
     await server.wait_closed()
 
 if __name__ == "__main__":

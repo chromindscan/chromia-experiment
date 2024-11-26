@@ -15,23 +15,45 @@ export default function Home() {
     jake: "neutral",
     mike: "neutral"
   });
+  const [socket, setSocket] = useState<WebSocket | null>(null);
+  const [isRunning, setIsRunning] = useState(false);
 
-  useEffect(() => {
-    const socket = new WebSocket("ws://localhost:8765")
+  const startSimulation = () => {
+    const ws = new WebSocket('ws://localhost:8765');
+    
+    ws.onopen = () => {
+      setIsRunning(true);
+      console.log('Connected to simulation server');
+    };
 
-    socket.onmessage = (event) => {
-      const data = JSON.parse(event.data)
-      if (data.type === "log") {
-        setLogs((prevLogs) => [...prevLogs, data.message])
-      } else if (data.type === "interest_levels") {
-        setInterestLevels(data.levels)
+    ws.onmessage = (event) => {
+      const data = JSON.parse(event.data);
+      if (data.type === 'log') {
+        setLogs(prev => [...prev, data.message]);
+      } else if (data.type === 'interest_levels') {
+        setInterestLevels(data.levels);
       }
-    }
+    };
 
-    return () => {
-      socket.close()
+    ws.onclose = () => {
+      setIsRunning(false);
+      console.log('Disconnected from simulation server');
+    };
+
+    ws.onerror = (error) => {
+      console.error('WebSocket error:', error);
+      setIsRunning(false);
+    };
+
+    setSocket(ws);
+  };
+
+  const stopSimulation = () => {
+    if (socket) {
+      socket.close();
+      setSocket(null);
     }
-  }, [])
+  };
 
   useEffect(() => {
     if (logs.length > 0) {
@@ -45,7 +67,6 @@ export default function Home() {
           setEmotions(prev => ({ ...prev, jake: "angry" }));
         }
       }
-      // Similar logic for other characters...
     }
   }, [logs]);
 
@@ -66,6 +87,19 @@ export default function Home() {
           <p className="text-white/60 text-lg relative z-10">
             Watch as AI agents compete for Sophie&apos;s attention
           </p>
+          
+          <div className="mt-4">
+            <button
+              onClick={isRunning ? stopSimulation : startSimulation}
+              className={`px-6 py-2 rounded-lg font-semibold transition-colors ${
+                isRunning 
+                  ? 'bg-red-500 hover:bg-red-600' 
+                  : 'bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600'
+              } text-white`}
+            >
+              {isRunning ? 'Stop Simulation' : 'Start Simulation'}
+            </button>
+          </div>
         </motion.header>
 
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">

@@ -26,7 +26,6 @@ A fun AI experiment where two agents (Jake the Hacker and Mike the Rebel) compet
 
 - Python 3.9+
 - OpenAI API key
-- Redis (for memory storage)
 
 ### Installation
 
@@ -50,17 +49,12 @@ pip install -r requirements.txt
 OPENAI_API_KEY=your_openai_api_key
 ```
 
-4. Run the Next.js server on one terminal:
+4. Run both frontend and backend servers:
 
 ```bash
-npm run dev
+npm run dev:full
 ```
 
-5. Run the Python server on another terminal:
-
-```bash
-python main.py
-```
 ## 🛠️ Technical Stack
 
 - **Language**: Python 3.9+

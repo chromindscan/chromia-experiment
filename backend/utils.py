@@ -46,7 +46,7 @@ class BaseAgent:
         self.state = AgentState(agent_id=agent_id, status="idle")
         self.memory = ConversationMemory()
         
-        with open('prompt.yaml', 'r') as f:
+        with open('backend/prompt.yaml', 'r') as f:
             self.prompts = yaml.safe_load(f)
         
     async def process_message(self, message: Message) -> Message:
@@ -64,7 +64,7 @@ class BaseAgent:
     async def _handle_message(self, message: Message) -> Message:
         raise NotImplementedError()
 
-def load_prompts(prompt_path: str = "prompt.yaml") -> dict:
+def load_prompts(prompt_path: str = "backend/prompt.yaml") -> dict:
     with open(prompt_path, 'r') as file:
         return yaml.safe_load(file)
 
