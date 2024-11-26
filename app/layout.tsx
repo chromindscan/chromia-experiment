@@ -2,8 +2,8 @@ import type { Metadata } from 'next'
 import './globals.css'
 
 export const metadata: Metadata = {
-  title: 'Agent Experiment',
-  description: 'A simple UI for agent logs',
+  title: 'Dystopian Dating Simulator',
+  description: 'Watch AI agents compete for love in a dystopian future',
 }
 
 export default function RootLayout({
@@ -13,7 +13,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body>{children}</body>
+      <body className="bg-gray-900 text-gray-100">{children}</body>
     </html>
   )
 }

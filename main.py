@@ -31,7 +31,7 @@ async def run_dating_simulation(websocket):
     
     try:
         await send_log(websocket, "💻 Simulation Initiated...")
-        
+                
         while True:
             await send_interest_levels(websocket, sophie.interest_level)
             

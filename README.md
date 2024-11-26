@@ -1,5 +1,7 @@
 # Dystopian Dating Simulator 🤖💘
 
+![Dystopian Dating Simulator](screenshots/image.png)
+
 A fun AI experiment where two agents (Jake the Hacker and Mike the Rebel) compete for Sophie's attention in a dystopian world. Watch as they navigate conversation, rivalry, and romance in this unique AI-powered dating simulation.
 
 ## 🌟 Features
